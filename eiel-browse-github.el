@@ -49,7 +49,7 @@ Argument FILE-PATH"
   (let*
       ((paths (eiel-browse-github--seprate-source-paths file-path))
        (root-path (car paths))
-       (source-path (string-replace ".gz" "" (cdr paths)))
+       (source-path (replace-regexp-in-string ".gz" "" (cdr paths)))
        (branch (eiel-browse-github--branch-name-for-emacs root-path))
        (hash-param (cond
 		    ((null start-line) "")
