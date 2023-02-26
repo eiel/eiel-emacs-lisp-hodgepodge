@@ -1,0 +1,23 @@
+name: test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        emacs_version:
+          - '24.5'
+          - '25.3'
+          - '26.3'
+          - '27.1'
+          - '28.2'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: purcell/setup-emacs@master
+      with:
+        version: ${{ matrix.emacs_version }}
+
+    - name: Run tests
+      if: matrix.allow_failure != true
+      run: 'make test'
