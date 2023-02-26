@@ -27,22 +27,22 @@
 (defvar eiel-browse-github-open-command "open" "Browse open command.")
 (region-active-p)
 
+;;;###autoload
 (defun eiel-browse-github ()
   "Browse source code in github."
   (interactive)
-  (let*
-      ((buffer (current-buffer))
-       (file-name (buffer-file-name buffer))
-       (start-line (if (region-active-p)
-		       (line-number-at-pos (region-beginning))
-		     (line-number-at-pos)
-		     ))
-       (end-line (and (region-active-p)
-		     (line-number-at-pos (region-end))))
-       (url (eiel-browse-github-to-url file-name start-line end-line)))
+  (let* ((file-name (buffer-file-name (current-buffer)))
+	 (start-line (if (region-active-p)
+			 (line-number-at-pos (region-beginning))
+		       (line-number-at-pos)
+		       ))
+	 (end-line (and (region-active-p)
+			(line-number-at-pos (region-end))))
+	 (url (eiel-browse-github-to-url file-name start-line end-line)))
     (eiel-browse-github--browse-url url)
     ))
 
+;;;###autoload
 (defun eiel-browse-github-to-url (file-path &optional start-line end-line)
   "Translate github url from file path.
 Argument FILE-PATH"
@@ -55,7 +55,7 @@ Argument FILE-PATH"
 		    ((null start-line) "")
 		    ((or (null end-line)
 			 (equal start-line end-line))
-			 (format "#L%s" start-line))
+		     (format "#L%s" start-line))
 		    (t (format "#L%s-L%s" start-line end-line))
 		    ))
        )
@@ -79,7 +79,6 @@ Argument FILE-PATH"
   (string-match "\\(.*/share/[^/]*/[^/]*\\)/\\(.*\\)" file-path)
   (cons (match-string 1 file-path)
 	(match-string 2 file-path)))
-
 
 (provide 'eiel-browse-github)
 

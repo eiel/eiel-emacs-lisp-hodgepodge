@@ -56,7 +56,7 @@
      (equal
       (eiel-browse-github-to-url file-path)
       "https://github.com/emacs-mirror/emacs/blob/emacs-28.2/lisp/replace.el"))
-  ))
+    ))
 
 (ert-deftest test-emacs-28.1-c-source ()
   (let
